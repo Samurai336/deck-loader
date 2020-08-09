@@ -1,0 +1,72 @@
+import TinyDeckConverter from '../clients/tinydeckconverterclient.js'
+import React, { Component } from 'react';
+
+
+export default class Uploader extends Component {
+    constructor(props){
+        super(props); 
+        this.tinyDeckConverterClient = new TinyDeckConverter();
+        this.state = {
+            deckFile: null, 
+            deckData: [] 
+        }; 
+    }
+
+    onFileChange = (event) => {
+        this.setState({
+            deckFile: event.target.files[0]
+        });
+    }
+
+    onFileUpload = async () =>  {
+        const deckFileFormData = new FormData(); 
+        deckFileFormData.append("dulingoDeckCsvFile", 
+        this.state.deckFile, 
+        this.state.deckFile.name); 
+
+        const deckData = await this.tinyDeckConverterClient.convertDeck({deckFileFormData});
+
+        this.setState({
+            deckData
+        });
+    }
+
+    fileData = () => {
+        if(this.state.deckFile){
+            return(
+            <div> 
+            <h2>File Details:</h2> 
+            <p>File Name: {this.state.deckFile.name}</p> 
+            <p>File Type: {this.state.deckFile.type}</p> 
+            <p> 
+              Last Modified:{" "} 
+              {this.state.deckFile.lastModifiedDate.toDateString()} 
+            </p> 
+          </div> 
+            ); 
+        }  
+
+        return (
+            <div> 
+            <br /> 
+            <h4>Choose before Pressing the Upload button</h4> 
+          </div> 
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                <div> 
+                <input type="file" onChange={this.onFileChange} />
+                export                <button onClick={this.onFileUpload}>
+                    Preview Decks 
+                </button>
+                </div>
+                {this.fileData()}
+            </div>
+        ); 
+    }
+
+
+} 
