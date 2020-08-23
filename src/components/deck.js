@@ -29,11 +29,10 @@ export default function Deck(props){
                 <img alt="deckCoverImage" src={coverImage} width="100px;" onError={i => i.target.style.display='none'} />
                 <br/>
                  <button onClick={() => setDeckContentVisible(!deckContentVisible)}>
-                   {name}
-                </button>
-								<br/>
-								<button id={name} onClick={downloadDeck}>
-									Download Deck
+                   Preview --> {name}
+                </button>{'   '}
+                <button id={name} onClick={downloadDeck}>
+									Download This Deck
                 </button>
             </div>
             );
