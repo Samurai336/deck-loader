@@ -24,6 +24,18 @@
   color: white;
 }
 
+#header {
+  position: relative;
+  min-height: 150px;
+  text-align:center
+}
+
+#header-content {
+  position: absolute;
+  bottom: 0;
+}
+
+
 .App-link {
   color: #61dafb;
 }
