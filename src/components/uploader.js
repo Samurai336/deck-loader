@@ -65,10 +65,10 @@ export default function Uploader() {
         <div>
         <h2>Step 1</h2>
             <p>
-                Go to <a href="https://support.duolingo.com/hc/en-us/articles/360043909772"> the shutdown FAQ </a> and follow the instructions under "What will happen to our existing decks?".
+                Go to <a rel="noopener noreferrer"  target="_blank"  href="https://support.duolingo.com/hc/en-us/articles/360043909772"> the shutdown FAQ </a> and follow the instructions under "What will happen to our existing decks?".
             </p>
             <p>
-                Following the instructions and use <a href="https://drive-thru.duolingo.com/">drive through</a> download your deck data. The file you need will be called `decks.csv`.
+                Following the instructions and use <a rel="noopener noreferrer"  target="_blank"  href="https://drive-thru.duolingo.com/">drive through</a> download your deck data. The file you need will be called `decks.csv`.
             </p>
         <h2>
             Step 2
