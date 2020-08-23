@@ -32,4 +32,4 @@ class TinyDeckConverterClient {
     }
 }
 
-module.exports = TinyDeckConverterClient; 
+export default TinyDeckConverterClient; 
