@@ -14,7 +14,7 @@ export default function Deck(props){
      
 			const file = new Blob([deckZip], {type: 'application/zip'});
 			
-			const deckExportName = props.deckName.replace(/[^a-z0-9+]+/gi, '+'); 
+			const deckExportName = props.name.replace(/[^a-z0-9+]+/gi, '+'); 
 			 
 			const element = document.createElement("a");
 			element.href = URL.createObjectURL(file);

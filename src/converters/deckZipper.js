@@ -31,7 +31,7 @@ const ZipDeck = async ({deck, zippedPack}) => {
         const coverImageData = await getImage(coverImageUrl); 
         const dataPath = `assets/${coverImageName}`; 
         zippedPack.file(dataPath, coverImageData); 
-        deck.coverImageLocalAssetPath = dataPath; 
+        deckData.coverImageLocalAssetPath = dataPath; 
     }
 
     for(let i = 0; i < deckData.cards.length; i = i + 1){ 
