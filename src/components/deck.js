@@ -9,8 +9,8 @@ import StackGrid from "react-stack-grid";
 export default function Deck(props){
     const [deckContentVisible, setDeckContentVisible] = useState(false);
 
-    async function downloadDeck(){
-			const deckZip = await ZipDecks([props]); 
+    async function downloadDeck(exportType){
+			const deckZip = await ZipDecks({Decks:[props],exportType}); 
      
 			const file = new Blob([deckZip], {type: 'application/zip'});
 			
@@ -31,8 +31,12 @@ export default function Deck(props){
                  <button onClick={() => setDeckContentVisible(!deckContentVisible)}>
                    Preview --> {name}
                 </button>{'   '}
-                <button id={name} onClick={downloadDeck}>
+                {/*todo: Change this to a drop down with options of export types.*/}
+                <button id={name} onClick={() => downloadDeck("json")}>
 									Download This Deck
+                </button>{'   '}
+                <button onClick={() => downloadDeck("csv")}>
+									Download This Deck as CSV 
                 </button>
             </div>
             );
