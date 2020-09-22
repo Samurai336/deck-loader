@@ -1,6 +1,10 @@
 const converDataToCSV = ({cards}) =>{ 
     return cards.reduce((csvString, {cardFront, cardBack}) => {
-        return `${csvString}${cardFront.cardText},${cardBack.cardText};`
+        const cleanFrontText = cardFront.cardText.replace(/,/g, '-');
+        const cleanBackText = cardBack.cardText.replace(/,/g, '-');
+
+
+        return `${csvString}${cleanFrontText},${cleanBackText};`
     },"")
 }
 export function GenerateExportData({exportType="json", deckData}){
