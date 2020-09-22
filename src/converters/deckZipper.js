@@ -1,14 +1,19 @@
 import JSZip from "jszip";
+import { GenerateExportData } from "./dataFormatter.js"
 const url = require('url');
 const axios = require("axios");
 
 const getImage = async (imageSourceUrl) => {
-    const { data } = await axios.request({
+    const { data, status } = await axios.request({
         url: `https://cors-anywhere.herokuapp.com/${imageSourceUrl}`,
         mathod: "GET",
         responseType: "blob",
+        validateStatus: false 
     })
 
+    if(status === "404"){
+        return null
+    }
     return data; 
 }
 
@@ -18,12 +23,14 @@ const handleCardImage = async ({cardSide, zippedPack}) => {
         const imageName = url.parse(imageUrl).path.replace(/\\|\//g,''); 
         const dataPath = `assets/${imageName}`; 
         const cardImage = await getImage(imageUrl); 
-        zippedPack.file(dataPath, cardImage); 
+        if(cardImage){
+            zippedPack.file(dataPath, cardImage); 
+        }
         cardSide.cardImageAssetPath = dataPath; 
     }
 }
 
-const ZipDeck = async ({deck, zippedPack}) => {
+const ZipDeck = async ({deck, zippedPack, exportType}) => {
     const deckData = JSON.parse(JSON.stringify(deck));
     if(deck.coverImage.trim()){
         const coverImageUrl = deck.coverImage; 
@@ -41,14 +48,16 @@ const ZipDeck = async ({deck, zippedPack}) => {
 
     const deckExportName = deckData.name.replace(/[^a-z0-9+]+/gi, '+'); 
 
-    zippedPack.file(`${deckExportName}.JSON`,JSON.stringify(deckData));
+    const {fileExtension, formatedDeckDataString} = GenerateExportData({exportType, deckData});
+
+    zippedPack.file(`${deckExportName}.${fileExtension}`,JSON.stringify(formatedDeckDataString));
 }
 
-export async function ZipDecks(Decks){
+export async function ZipDecks({Decks, exportType="json"}){
     const zippedPack = new JSZip();
     for(let i = 0; i < Decks.length; i = i + 1){
         const deck = Decks[i]; 
-        await ZipDeck({deck, zippedPack}); 
+        await ZipDeck({deck, zippedPack, exportType}); 
     }
 
    return zippedPack.generateAsync({type:"blob"}); 

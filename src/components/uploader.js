@@ -21,8 +21,8 @@ export default function Uploader() {
         setDeckData({ type: "updateCards", data: deckData}); 
     }
 
-    async function downloadAllDecks(){
-        const deckZip = await ZipDecks(deckDataState.deckData); 
+    async function downloadAllDecks(exportType){
+        const deckZip = await ZipDecks({Decks: deckDataState.deckData, exportType}); 
  
         const file = new Blob([deckZip], {type: 'application/zip'});
         
@@ -45,8 +45,14 @@ export default function Uploader() {
 							Click `Download All Decks` to download your deckdata and assets in a zip file.<br/>
 							The zip file, will contain each decks data as a JSON file and all your cards image resource will be in a folder called assets.
 							<br/>
-							<button onClick={downloadAllDecks}>
+                {/*todo: Change this to a drop down with options of export types.*/}
+
+							<button onClick={() => downloadAllDecks("json")}>
                 Download All Decks
+            	</button>
+
+                <button onClick={() => downloadAllDecks("csv")}>
+                Download All Decks as CSV
             	</button>
 							<h2>Step 3b</h2>
 							Download individual decks in a zip file by clicking `Download this Deck` next to each decks preview button.<br/>
