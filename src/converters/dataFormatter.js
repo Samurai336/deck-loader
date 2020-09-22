@@ -3,7 +3,6 @@ const converDataToCSV = ({cards}) =>{
         const cleanFrontText = cardFront.cardText.replace(/,/g, '-');
         const cleanBackText = cardBack.cardText.replace(/,/g, '-');
 
-
         return `${csvString}${cleanFrontText},${cleanBackText};`
     },"")
 }
